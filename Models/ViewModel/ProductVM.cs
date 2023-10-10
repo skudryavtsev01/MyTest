@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace MyTest.Models.ViewModel
 {
@@ -6,5 +7,6 @@ namespace MyTest.Models.ViewModel
     {
         public Product Product { get; set; }
         public IEnumerable<SelectListItem> CategorySelectList { get; set; }
+        public IEnumerable<SelectListItem> ApplicationTypeSelectList { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MyTest.Models
 {
@@ -21,7 +22,12 @@ namespace MyTest.Models
         [Display(Name = "Category Type")]
         public int CategoryId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+
+        [Display(Name = "Application Type")]
+        public int ApplicationId { get; set; }
+        [ForeignKey("ApplicationId")]
+        public virtual ApplicationType ApplicationType { get; set; }
     }
 }

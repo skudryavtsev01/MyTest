@@ -1,21 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MyTest.Data;
 using MyTest.Models;
+using MyTest.Models.ViewModel;
 using System.Diagnostics;
 
 namespace MyTest.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext _db)
         {
-            _logger = logger;
+            db = _db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeVM homeVM = new HomeVM()
+            {
+                Categories = db.Category,
+                Products = db.Product.Include(u => u.ApplicationType).Include(u => u.Category)
+            };
+
+            return View(homeVM);
+        }
+
+        public IActionResult Details(int id) 
+        {
+            DetailsVM detailVM = new DetailsVM()
+            {
+                Product = db.Product.Include(u=>u.ApplicationType).Include(i=>i.Category).Where(u=>u.Id==id).FirstOrDefault()
+                , ExistsInCart = false
+            };
+
+            return View(detailVM);
         }
 
         public IActionResult Privacy()

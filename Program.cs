@@ -4,8 +4,11 @@ using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // Add services to the container.
- builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
          builder.Configuration.GetConnectionString("DefaultConnection")
 ));
 

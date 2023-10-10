@@ -4,13 +4,13 @@
     var title = "Create Product";
 }
 
-<form method="post" enctype="multipart/form-data">
-    @if(Model.Product.Id!=0)
+<form method="post" enctype="multipart/form-data"> 
+    @if (Model.Product.Id != 0)
     {
         title = "Edit Product";
         <input asp-for="Product.Id" hidden />
     }
-    
+
     <div class="border p-3">
         <div class="form-group row">
             <h2 class="text-info pl-3">@title</h2>
@@ -47,7 +47,7 @@
                     </div>
 
                 </div> 
-                <div style="margin-bottom: 1rem;" class="row">
+                 <div style="margin-bottom: 1rem;" class="row">
                     <div class="col-4">
                         Image
                     </div>
@@ -56,7 +56,7 @@
                     </div>
 
                 </div>
-                <div style="margin-bottom: 1rem;" class="row">
+                 <div style="margin-bottom: 1rem;" class="row">
                     <div class="col-4">
                         <label asp-for="Product.CategoryId"></label>
                     </div>
@@ -65,6 +65,18 @@
                             <option disabled selected>--Select Category--</option>
                         </select>
                         <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div style="margin-bottom: 1rem;" class="row">
+                    <div class="col-4">
+                        <label asp-for="Product.ApplicationId"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Product.ApplicationId" asp-items="@Model.ApplicationTypeSelectList" class="form-control">
+                            <option disabled selected>--Select ApplicationType--</option>
+                        </select>
+                        <span asp-validation-for="Product.ApplicationId" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -84,13 +96,16 @@
                             
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success w-100">Back</a>
+                            <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                @* Keep this empty *@
+                @if(Model.Product.Id!=0)
+                {
+                    <img src="@WC.ImagePath@Model.Product.Image" width="100%" style="border-radius:5px; border:1px solid #bbb" />
+                }
             </div>
         </div>
     </div>
@@ -98,7 +113,7 @@
 
 @section Scripts{
     @{
-                        <partial name="_ValidationScriptsPartial"></partial>
+        <partial name="_ValidationScriptsPartial"></partial>
     }
 
     <script>

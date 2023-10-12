@@ -11,6 +11,13 @@ builder.Logging.AddConsole();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
          builder.Configuration.GetConnectionString("DefaultConnection")
 ));
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSession(Option => { 
+    Option.IdleTimeout = TimeSpan.FromSeconds(10);
+    Option.Cookie.HttpOnly = true;
+    Option.Cookie.IsEssential = true;
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -26,11 +33,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
